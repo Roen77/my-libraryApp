@@ -2,9 +2,7 @@
   <div class="book-details">
     <div>
       <BookCardDetail :book="book" />
-      <div
-        class="control_btns"
-      >
+      <div class="control_btns">
         <div class="left_btn">
           <!-- 삭제 버튼 -->
           <button class="primary-btn red" @click="onremoveBook">
@@ -30,12 +28,14 @@
         <h2 class="sub_head">
           책 정보 수정
         </h2>
-        <button class="closebtn round-btn" @click="closeEdit">
-          닫기
-        </button>
       </div>
       <div slot="body">
         <FormBook />
+        <div class="eidt_footer">
+          <button class="closebtn round-btn" @click="closeEdit">
+            닫기
+          </button>
+        </div>
       </div>
     </CommonModal>
   </div>
@@ -125,6 +125,7 @@ export default {
 .book_form.edit{width: 100%; box-sizing: border-box; display: flex; justify-content: center; align-items: center;}
 .book_form.edit .modal-header>div{position: relative; width: 1200px; max-width: 100%; margin: 0 auto;}
 .book_form.edit .modal-container{height: 100vh; overflow-y: auto;}
+.eidt_footer{width: 1200px;margin: 0 auto; max-width: 100%; padding: 14px 0; text-align: right;}
 @media (max-width:600px) {
 .control_btns{display: block;}
 .book_form.edit .modal-header{padding: 5px;}

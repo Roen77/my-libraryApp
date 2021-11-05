@@ -171,6 +171,7 @@ export default {
     showSearchForm () {
       this.searchData.showsearchState = !this.searchData.showsearchState
       // 기존 검색 데이터 초기화
+      this.searchData.input = ''
       this.updateSearch({
         data: '',
         selectedOption: this.searchData.options[0]
