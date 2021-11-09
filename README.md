@@ -152,11 +152,12 @@ export default function ({ $axios, error, redirect }) {
 ```
 |IE 캐시 이슈 |
 |:---|
-|브라우져가 캐시하는 대상은 GET 메소드에 한정되는데 IE일 경우 GET 메소드 호출시, 캐시를 사용하여 메서드가 재호출되지 않는 문제가 발생했습니다.|
+|댓글 데이터를 가져올 경우, GET 메서드를 통해 댓글 조회 API를 호출하여 데이터를 가져옵니다.<br>IE에서 댓글을 추가한 후, 다시 해당 API를 호출하더라도 기존 데이터가 보여지는 문제가 발생했습니다.<br>
+
 
 |IE 캐시 이슈 해결|
 |:---|
-|IE일 경우, 요청 헤더에 `Cache-Control: no-cache`를 담아 서버로 전송하면 브라우저는 캐시를 사용하지 않고 서버로 요청합니다.|
+|이는 IE에서 GET 메서드 호출시 캐시를 사용하여 발생한 문제로,<br>IE일 경우 요청 헤더에 `Cache-Control: no-cache`를 담아 서버로 전송하면 브라우저는 캐시를 사용하지 않고 서버로 요청합니다.|
 
 <br>
 
@@ -195,7 +196,7 @@ export default function ({ $axios, error, redirect }) {
 
 - `nuxt`에서 제공하는 `layout/error.vue`를 구성하여, 오류가 발생할 때, 해당 페이지를 보여주도록 하였습니다.
 <br>
-<a href="https://nuxtjs.org/docs/2.x/directory-structure/layouts#error-page">`nuxt` error page 공식 문서 바로 가기</a>
+<a href="https://nuxtjs.org/docs/2.x/directory-structure/layouts#error-page">nuxt error page 공식 문서 바로 가기</a>
 
 ```html
 <!-- layouts/error.vue -->
@@ -491,7 +492,7 @@ props
 
 `form-search 컴포넌트`
 
-> `select` 태그는 브라우저마다 다르게 보이기 때문에 통일되게 보일 수 있도록 `select` 태그를 사용하지않고, `ul`태그를 이용해 커스텀하여 구현했습니다.
+> `select` 태그는 브라우저마다 다르게 보이기 때문에 통일되게 보일 수 있도록 `select` 태그를 사용하지 않고, `ul`태그를 이용해 커스텀하여 구현했습니다.
 
 
 ```html
@@ -1477,7 +1478,7 @@ export const actions = {
 ```
 > `axios`를 이용해 프로필 정보 수정 API를 호출합니다. <br>
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -1772,7 +1773,9 @@ methods:{
 |methods|설명|
 |:---|:---|
 |addFetchBook|더 불러올 데이터가 있다면, 현재페이지를 증가시켜주고, 책 검색 API를 호출합니다.( 초기화할 필요 없으므로 `resetBook`에 `false`를 전달해줍니다.)|
-<br><br>
+
+
+<br>
 
 
 2-3. store
@@ -1813,7 +1816,7 @@ methods:{
 
 > <b>통합검색/옵션에 따른 검색</b> 두가지 방법으로 구현하기 위해, 호출하는 API를 구분하였습니다.
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -1851,7 +1854,7 @@ methods:{
 
 |해결|
 |---|
-|`{reset:true}` 별도의 객체 속성을 주어, 해당 속성이 `true`일 경우에만 `books` 배열을 초기화하고, 그러지 않다면 기존 배열에 계속 누적시킵니다.
+|`{reset:true}` 별도의 객체 속성을 주어, 해당 속성이 `true`일 경우에만 `books` 배열을 초기화하고, 그렇지 않다면 기존 배열에 계속 누적시킵니다.
 예시)옵션을 "통합"으로 설정하여 검색한 후,"제목"이나 "출판사" 등과 같은 다른 옵션으로 다시 재검색시, 기존에 존재하는 책의 정보를 초기화시켜줍니다.|
 
 <br>
@@ -2301,7 +2304,7 @@ methods
 ```
 > `axios`를 이용해  책 수정 API를 호출합니다.
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 
 |mutations|
@@ -2695,7 +2698,7 @@ methods
 ```
 > `axios`를 이용해 책 조회 API를 호출합니다.
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -2918,12 +2921,12 @@ export default {
 
 |해결|
 |---|
-|` watchQuery: ['search', 'target']` 속성으로 쿼리 변경 사항을 확인하고, 해당 쿼리 변경시 `astncData`훅이 호출될 수 있도록 구현하였습니다.<br>(<a href="https://nuxtjs.org/docs/2.x/components-glossary/pages-watchquery">`nuxt` `watchQuery`에 관한 문서</a>)|
+|` watchQuery: ['search', 'target']` 속성으로 쿼리 변경 사항을 확인하고, 해당 쿼리 변경시 `astncData`훅이 호출될 수 있도록 구현하였습니다.<br>(<a href="https://nuxtjs.org/docs/2.x/components-glossary/pages-watchquery">nuxt watchQuery에 관한 문서</a>)|
 
 <br>
 
 <b>2. 다른 사용자의 책 검색하기</b>
-> `메뉴`에서 `다른 사용자 책 검색`을 클릭하면 입력폼이 보여지고, `책제목` , `저자` 두가지 옵션으로 검색할 수 있도록 구현하였습니다.
+> 메뉴에서 "다른 사용자 책 검색"을 클릭하면 입력폼이 보여지고, `책제목` , `저자` 두가지 옵션으로 검색할 수 있도록 구현하였습니다.
 ```html
 <!-- ~/components/AppHeader.vue -->
 <template>
@@ -2972,6 +2975,7 @@ methods
     showSearchForm () {
       this.searchData.showsearchState = !this.searchData.showsearchState
       // 기존 검색 데이터 초기화
+      this.searchData.input = ''
       this.updateSearch({
         data: '',
         selectedOption: this.searchData.options[0]
@@ -3055,7 +3059,7 @@ export default {
   watchQuery: ['name']
 }
 ```
-
+***
 
 ### <div id="get_data"><b>6. 책 상세 보기</b></div>
 |컴포넌트|라우터|
@@ -3472,7 +3476,7 @@ computed: {
 ```
 > `axios`를 이용해 북마크 추가 API를 호출합니다.
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -3552,7 +3556,7 @@ computed: {
 ```
 > `axios`를 이용해 북마크 삭제 API를 호출합니다.
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -3664,7 +3668,7 @@ computed: {
 ```
 > `axios`를 이용해 좋아요 추가 API를 호출합니다.
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -3736,7 +3740,7 @@ computed: {
 ```
 > `axios`를 이용해 좋아요 삭제 API를 호출합니다.
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -3756,7 +3760,7 @@ computed: {
 
 <br>
 
-
+***
 ### <div id="get_data"><b>8. 댓글 보기 및 추가 및 삭제</b></div>
 |컴포넌트|
 |---|
@@ -3971,7 +3975,7 @@ methods
 ```
 <br>
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -4285,10 +4289,10 @@ methods:{
 ```
 > `axios`를 이용해 댓글 추가 API를 호출합니다.
 
-> `댓글 작성한 내용`과 `별점`인 `rating`데이터도 함께 서버에 보내주도록 구현하였습니다.<br>
+> "댓글 작성한 내용"과 "별점"인 `rating`데이터도 함께 서버에 보내주도록 구현하였습니다.<br>
 ([별점 주기 기능](#get_star) 바로 가기)
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -4427,12 +4431,12 @@ methods
 
 |문제점|
 |---|
-|처음 `댓글 보기 버튼`을 클릭했을 때, `댓글 조회 API`를 호출하여 데이터(댓글) 10개를 가져오고, 스크롤을 하단으로 내렸을 때, 다음 댓글을 가져오기 위해 `댓글 조회 API`를 추가로 호출하도록 구현하였습니다.<br>만약 내가 댓글을 삭제했을 때, 스크롤이 화면 하단에 위치하지 않는다면, 더 불러올 데이터(댓글)이 존재함에도 불구하고, 해당 데이터를 보여주지 않는 문제가 발생했습니다.<br>예시)보여줄 코멘트가 10개 이상 존재하고,스크롤을 하단에 내리지 않은 상태에서 댓글을 삭제한다면, 보여줄 코멘트가 있어도 `화면 하단`으로 스크롤을 내리지 않는 이상 `댓글 조회 API`를 호출하지 않기 때문에 댓글을 보여주지 않습니다.|
+|처음 `댓글 보기 버튼`을 클릭했을 때, `댓글 조회 API`를 호출하여 데이터(댓글) 10개를 가져오고, 스크롤을 하단으로 내렸을 때, 다음 댓글을 가져오기 위해 `댓글 조회 API`를 추가로 호출하도록 구현하였습니다.<br>만약 내가 댓글을 삭제했을 때, 스크롤이 화면 하단에 위치하지 않는다면, 더 불러올 데이터(댓글)이 존재함에도 불구하고, 해당 데이터를 보여주지 않는 문제가 발생했습니다.<br>예시)보여줄 댓글이 10개 이상 존재하고 스크롤을 하단에 내리지 않은 상태에서 댓글을 삭제한다면, 더 보여줄 댓글이 존재하더라도 `화면 하단`으로 스크롤을 내리지 않는 이상 `댓글 조회 API`를 호출하지 않기 때문에 댓글을 보여주지 않습니다.|
 
 
 |해결|
 |---|
-|댓글을 삭제했을 때,존재하는 댓글이 10개 이상일 경우 스크롤을 하단으로 내려 `댓글 조회 API`를 추가적으로 호출하지 않은 상태일 때에만 `댓글 조회 API`를 호출합니다.|
+|댓글을 삭제했을 때, 존재하는 댓글이 10개 이상일 경우 스크롤을 하단으로 내려 `댓글 조회 API`를 추가적으로 호출하지 않은 상태일 때에만 `댓글 조회 API`를 호출합니다.|
 
 ```js
  async deleteComment ({ commit, dispatch, state }, comment) {
@@ -4449,7 +4453,7 @@ methods
   }
 ```
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -4607,7 +4611,7 @@ methods
 
 |위처럼 구현한 이유|
 |---|
-|`css` `~` 형제선택자는 태그 뒤에 오는 모든 요소를 선택하는 것이기 때문에 `class`명에 `active` 요소가 붙은 전의 별들의 색깔을 `css`만으로는 수정이 어려워, 위처럼 반대로 구현하였습니다.<br>(초기 별의 색깔은 노란색으로 해주고, `class`명에 `active`가 붙는다면, 해당 태그 뒤에 오는 모든 별들의 색깔을 검은색으로 바꿔주어 `css`로만 별점 보여주기 기능을 구현 하였습니다.)|
+|CSS ~ 형제선택자는 태그 뒤에 오는 모든 요소를 선택하는 것이기 때문에 `class`명에 `active` 요소가 붙은 전의 별들의 색깔을 CSS만으로는 수정이 어렵습니다. <br>그렇기 때문에 초기 별의 색깔은 노란색으로 해주고, `class`명에 `active`가 붙는다면, 해당 태그 뒤에 오는 모든 별들의 색깔을 검은색으로 바꿔주어 CSS로만 별점 보여주기 기능을 구현 하였습니다.)|
 
 <br>
 
@@ -4626,7 +4630,7 @@ methods
 |컴포넌트|라우터|
 |---|---|
 |components/form/Hashtag.vue|books/b/_id|
-|components/book/CardDetail.vue|books/b/_id|
+|components/hashtag/List.vue|books/b/_id|
 
 ###  해시태그 보여주기
 
@@ -4651,7 +4655,7 @@ methods
 
 props
 ```js
-// ~/components/hashtagList.vue
+// ~/components/hashtag/List.vue
   props: {
     hashtags: {
       type: Array,
@@ -4827,7 +4831,7 @@ computed: {
 ```
 > `axios`를 이용해 해시태그 추가 API를 호출합니다.
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -4984,7 +4988,7 @@ methods
 ```
 > `axios`를 이용해 해시태그 삭제 API를 호출합니다.
 
-`commit`를 이용해 `mutatonis`을 호출합니다.
+`commit`를 이용해 `mutations`을 호출합니다.
 
 <br>
 
@@ -5229,7 +5233,7 @@ bookmarks: [{
 
 
 ||<a href="https://github.com/aws/aws-sdk-js">aws-sdk</a>|<a href="https://github.com/expressjs/multer#readme">multer</a>|<a href="https://github.com/badunk/multer-s3#readme">multer-s3</a>|
-|---|---|:---|:---:|
+|---|---|:---:|:---:|
 |버전|v2.888.0|v1.4.2|v2.9.0|v5.0.1|
 |_|Node.js의 JavaScript용 AWS SDK를 지원해주는 라이브러리|파일 업로드를 위해 사용되는 multipart/form-data 를 다루기 위한 node.js 의 미들웨어|AWS S3를 위한 multer 라이브러리| 내용|비밀번호 암호화하는데 도와주는 라이브러리|
 > amazon s3에 이미지를 저장할 수 있도록 도와줍니다.
@@ -5243,14 +5247,18 @@ bookmarks: [{
 |버전|v8.5.1|v6.6.2|v6.2.0|
 |-|Node.js 용 PostgreSQL|Postgres , MySQL , MariaDB , SQLite 및 Microsoft SQL Server를 위한  Node.js ORM|sequelize 용 cli|
 
->  postgresql에 연결할 수 있도록 도와줍니다.
->  sequdlize를 사용해 db 작성하였습니다.
+> pg는 postgresql에 연결할 수 있도록 도와줍니다. <br>
+>  sequdlize는  Node.js ORM으로, 자바스크립트와 데이터베이스 릴레이션을 매핑해주는 도구로, sequdlize로 DB를 작성하였습니다.
+
+<br>
 
 |<a href="https://www.passportjs.org/">passport</a>|<a href="https://www.passportjs.org/packages/passport-google-oauth20/">passport-google-oauth20</a>|<a href="https://www.passportjs.org/packages/passport-kakao/">passport-kakao</a>|<a href="https://www.passportjs.org/packages/passport-local/">passport-local</a>|<a href="https://github.com/kelektiv/node.bcrypt.js#readme">bcrypt</a>|
 |:---:|:---:|:---:|:---:|:---:|
 |전략 개념을 사용하여 사용자 정보를 인증하는 것을   도와주는 Node.js를 위한 미들웨어|구글 인증을 위한 passport 미들웨어|카카오 인증을 위한 passport 미들웨어|이메일 사용 인증을 위한 passport 미들웨어|비밀번호 암호화하는데 도와주는 라이브러리|
 
 > passport는 로그인시 사용하였습니다.
+
+<br>
 
 |[pm2](https://pm2.keymetrics.io/docs/usage/quick-start/)|[helmet](https://www.npmjs.com/package/helmet)|[hpp](https://www.npmjs.com/package/hpp)|[winston]()|
 |:---:|:---:|:---:|:---:|
@@ -5264,6 +5272,7 @@ bookmarks: [{
 -  <a href="https://sequelize.org/master/">sequlize</a> 사용하여 DB 작성
 
 - 관계도
+
 ![db 관계도](https://library.roen.pe.kr/images/library1.PNG)
 
 
@@ -5272,15 +5281,15 @@ bookmarks: [{
 ## 테스트
 클라이언트는 `cypress`를 이용해 E2E Test를 진행
 
-> E2E Test란 ndpoint(종단) 간 테스트로 사용자의 입장에서 사용자가 사용하는 상황을 가정하고 테스트 하는 것으로 cypress 를 이용하여 테스트를 진행했습니다.
+> E2E Test란 end to end(종단) 간 테스트로 사용자의 입장에서 사용자가 사용하는 상황을 가정하고 테스트 하는 것으로 cypress 를 이용하여 테스트를 진행했습니다.
 
 
 ## 배포
-- client :SSR를 사용하기 위해 amazon EC2 에 배포
-- server : amazon EC2 에 배포
+- client :SSR를 사용하기 위해 amazon EC2 에 배포(ubuntu 서버)
+- server : amazon EC2 에 배포(ubuntu 서버)
 
 ## https 적용
-Nginx 와 <a href="https://letsencrypt.org/">Lets' Encrypt</a>로 무료 SSL 인증서 발급하여 https 적용
+Nginx 와 <a href="https://letsencrypt.org/">Lets' Encrypt</a>로 무료 SSL 인증서를 발급하여 https 적용
 
 >  Nginx는 웹 서버 소프트웨어로, 웹 서버, 리버스 프록시 및 메일 프록시 기능을 가집니다.
 
